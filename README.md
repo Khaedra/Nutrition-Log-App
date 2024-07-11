@@ -9,4 +9,4 @@ This is especially of interest to me since second year co-op opportunities are a
 
 
 
-An example of text with **bold** and *italic* fonts. 
+An example of text with **bold** and *italic* fonts.    
