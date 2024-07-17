@@ -1,18 +1,22 @@
 # Job Application Organizer
 
-## For Struggling Individuals (like myself)
+# Daily Nutrition Tracker
+## For Gourmands, Epicures, and Computer Science Students
 
+This application is designed to help keep track of what foods and macronutrients a user consumes everyday. Users will be able to set targets or keep a journal log to record meals and review progress. Options to set calorie or water goals are available, and recommended values of nutrients based on age and weight are also available. 
 
-This application is designed to aid students and aspiring professionals efficiently manage their numerous job applications. In today's job market, finding even the most mundane positions demands patience and persistence on harrowing platforms like linkedIn and Indeed. Feeling overwhelmed in the face of multiple deadlines and interview dates is almost a guarantee. With this app, you will be able to track the jobs you've applied for, deadlines, interviews, requirements, and more. You will have the option to assign your applications with a tag to signify importance or urgency. As well, interview and resume tips will also be available. 
+This is especially of interest to **students** since studies often don't allow sufficient time to prepare healthy meals and are easily forgettable in the face of deadlines and exams. Spending 5 minutes a day logging food may drastically help a student fix or change their eating habits and overall wellbeing. 
 
-This is especially of interest to me since second year co-op opportunities are approaching. While I don't have much experience on my resume, applying to as many jobs as possible is a good start. Keeping track of everything with a spreadsheet is both time consuming and unpleasant visually. Therefore, this app will be used to help myself and others in a similar position. 
 
 ## User Stories 
 
-1. As a user, I want to be able to add a job application to my list of job of applications and specify dates, requirements and additional notes. 
-2. As a user, I want to be able to view all my job applications. 
-3. As a user, I want to be able to change the dates or titles of my job applications. 
-4. As a user, I want to be able to delete or mark a job application as complete. 
-5. As a user, I want to be able to see the number of incomplete and number of completed job applications on my job application list. 
+1. As a user, I want to be able to add a meal which includes calories, fat, sodium, protein etc. to my daily log.  
+2. As a user, I want to be able to see an overview of the meals I ate today, this week, or all time. 
+3. As a user, I want to be able to set a goal and be notified when I reach my goal.
+4. As a user, I want to be able to edit or delete meals if I make a mistake. 
+5. As a user, I want to be able to view a summary of total macronutrients consumed every day.
+
+
+
 
  
