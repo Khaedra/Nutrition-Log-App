@@ -5,19 +5,20 @@ import java.util.ArrayList;
 
 import model.Daily;
 import model.Meal;
-
+import model.Goal;
+import model.GoalList;
 
 //Some methods and ideas from Lab 3.2
+//Handles the creation and procedures of the nutrition app. 
 public class NutritionLog {
 
-    private Scanner scanner; 
+    private Scanner scanner;
     private boolean programRunning;
+    private ArrayList<Daily> alltime;
+    private GoalList goallist;
 
-    private ArrayList<Daily> alltime; 
-
-
-    //MODIFIES: this
-    //EFFECTS: prints out the welcome menu
+    // MODIFIES: this
+    // EFFECTS: prints out the welcome menu
     public NutritionLog() {
         init();
         divider();
@@ -30,63 +31,64 @@ public class NutritionLog {
 
     }
 
-    //MODIFIES: this
-    //INITIALIZES VARAIBLES
+    // MODIFIES: this
+    // INITIALIZES VARAIBLES
     public void init() {
-        programRunning = true; 
+        programRunning = true;
         alltime = new ArrayList<Daily>();
+        goallist = new GoalList();
         scanner = new Scanner(System.in);
 
     }
 
-    //Shows menu commands and takes input
+    // Shows menu commands and takes input
     public void displayMenu() {
         showProgress();
         showMenuCommands();
         int input = scanner.nextInt();
         performCommand(input);
 
-
     }
 
-    //List of all available commands
+    // List of all available commands
     public void showMenuCommands() {
         System.out.println("Select an option:");
         System.out.println("1 - New Day");
         System.out.println("2 - Select Day");
-        //TODO THE REST OF THESE
+        // TODO THE REST OF THESE
         System.out.println("3 - Add Goal");
-        System.out.println("4 - View Goal Progress"); //MUST HAVE A MARK AS COMPELETED NOTIFICATION
+        System.out.println("4 - View Goal Progress"); // MUST HAVE A MARK AS COMPELETED NOTIFICATION
         System.out.println("5 - Weekly Overview");
         System.out.println("6 - All Time Overview");
 
     }
 
-    //TODO: Show Daily Progress Goal
+    // TODO: Show Daily Progress Goal
     public void showProgress() {
 
     }
 
     public void performCommand(int input) {
 
-            switch (input) {
-                case 1:
-                    newDay();
-                    break;
-                case 2:
-                    displayDays();
-                    break;
-                // case "r":
-                //     reviewFlashcards();
-                //     break;
-                // case "q":
-                //     quitApplication();
-                //     break;
-                default:
-                    System.out.println("Invalid option inputted. Please try again.");
-            }
-        }
+        switch (input) {
+            case 1:
+                newDay();
+                break;
+            case 2:
+                displayDays();
+                break;
 
+            case 3:
+                goalMenu();
+                break;
+
+            case 4:
+                viewGoalProgress();
+                break;
+            default:
+                System.out.println("Invalid option inputted. Please try again.");
+        }
+    }
 
     public void newDay() {
         System.out.println("Enter Date: ");
@@ -103,50 +105,49 @@ public class NutritionLog {
 
     public void displayDayMenu(Daily day) {
         System.out.println("1 - Add a meal");
-        System.out.println("2 - Edit meal"); 
+        System.out.println("2 - Edit meal");
         System.out.println("3 - Delete a meal");
-        System.out.println("4 - View Daily Macros"); //TODO
+        System.out.println("4 - View Daily Macros"); // TODO
 
         int input = scanner.nextInt();
 
-        handleDayInput(day, input);
+        handleDayInput(day, input, goallist);
 
     }
 
-    public void handleDayInput(Daily day, int input) {
-        switch(input) {
+    public void handleDayInput(Daily day, int input, GoalList goallist) {
+        switch (input) {
             case 1:
-            addMeal(day);
-            break;
+                addMeal(day);
+                break;
 
             case 2:
-            editMeals(day);
-            break;
+                editMeals(day);
+                break;
 
             case 3:
-            deleteMeals(day);
-            break;
+                deleteMeals(day);
+                break;
 
-            case 4: 
-            viewDailyMacros(day);
-            break;
+            case 4:
+                viewDailyMacros(day, goallist);
+                break;
 
             default:
-            System.out.println("Invalid option inputted. Please try again.");
+                System.out.println("Invalid option inputted. Please try again.");
 
-
-            //TODO: add other cases
+                // TODO: add other cases
         }
 
     }
 
-    public void addMeal(Daily day){
+    public void addMeal(Daily day) {
         System.out.println("Enter food item: ");
-        //TODO cant have multiple words
+        // TODO cant have multiple words
         scanner.nextLine();
         String name = scanner.nextLine();
         System.out.println("Enter calories: ");
- 
+
         int calories = scanner.nextInt();
         System.out.println("Enter carbohydrates (grams): ");
         int carbohydrates = scanner.nextInt();
@@ -163,81 +164,74 @@ public class NutritionLog {
     }
 
     public void displayDays() {
-        
+
         if (alltime.size() == 0) {
             System.out.println("No days added. Please add a day.");
-        }
-        else {
+        } else {
             System.out.println("Select a Date: ");
 
-            for (int i = 0; i <alltime.size(); i++) {
+            for (int i = 0; i < alltime.size(); i++) {
                 System.out.println((alltime.get(i)).getDate());
             }
             String input = scanner.next();
-            
+
             goIntoDays(input);
         }
-        
+
     }
 
     public void goIntoDays(String input) {
-        boolean found = false; 
+        boolean found = false;
 
-        for (int i = 0; i < alltime.size(); i ++) {
+        for (int i = 0; i < alltime.size(); i++) {
             if (input.equals(alltime.get(i).getDate())) {
                 displayDayMenu(alltime.get(i));
-                found = true; 
-                break; 
-            }
-            else if (i == (alltime.size() - 1) && found == false) {
+                found = true;
+                break;
+            } else if (i == (alltime.size() - 1) && found == false) {
                 System.out.println("Invalid date entered. Please try again.");
                 displayDays();
             }
-            
+
         }
-        
+
     }
 
     public void editMeals(Daily day) {
         if (day.getSize() == 0) {
             System.out.println("No meals added. Please add a meal.");
+        } else {
+            editAction(day);
         }
-        else {
-            System.out.println("Type the name of the meal you wish to edit (type back to go back): ");
-            for(int i = 0; i < day.getSize(); i++) {
-                System.out.println(day.getMealString(i));
-    
-            }
-            String input = scanner.next();
-            Boolean found = false; 
-
-            for (int j = 0; j < day.getSize(); j ++) {
-                if (input.equals((day.getMeal(j)).getName())) {
-                    int placeholder = j; 
-                    day.remove(placeholder);    
-                    editAction(day, placeholder);
-                    found = true; 
-                    break;
-                }
-                else if (input.equals("back")){
-                   displayDayMenu(day);
-                }
-                else if (j == (day.getSize() - 1) && found == false ) {
-                    System.out.println("Invalid meal choice. Please try again.");
-                    editMeals(day);
-                }
-                
-            }
-            
-
-        }
-        
     }
 
-    public void editAction(Daily day, int index) {
+    public void editAction(Daily day) {
+        System.out.println("Type the name of the meal you wish to edit (type back to go back): ");
+        for (int i = 0; i < day.getSize(); i++) {
+            System.out.println(day.getMealString(i));
+        }
+        String input = scanner.next();
+        Boolean found = false;
+        for (int j = 0; j < day.getSize(); j++) {
+            if (input.equals((day.getMeal(j)).getName())) {
+                int placeholder = j;
+                day.remove(placeholder);
+                editMenu(day, placeholder);
+                found = true;
+                break;
+            } else if (input.equals("back")) {
+                displayDayMenu(day);
+            } else if (j == (day.getSize() - 1) && found == false) {
+                System.out.println("Invalid meal choice. Please try again.");
+                editMeals(day);
+            }
+        }
+    }
+
+    public void editMenu(Daily day, int index) {
         System.out.println("Enter food item: ");
         scanner.nextLine();
-        String name = scanner.next();
+        String name = scanner.nextLine();
         System.out.println("Enter calories: ");
         int calories = scanner.nextInt();
         System.out.println("Enter carbohydrates (grams): ");
@@ -253,69 +247,228 @@ public class NutritionLog {
         System.out.println("Meal Edited!");
     }
 
-    //MODIFIES: this
-    //EFFECTS: If no meals are logged today, print no meals added. If a valid meal is selected, bring up menu to edit
-    // meal details. If "back" is typed, return to day menu. 
+    // MODIFIES: this
+    // EFFECTS: If no meals are logged today, print no meals added. If a valid meal
+    // is selected, bring up menu to edit meal details.
+
     public void deleteMeals(Daily day) {
         if (day.getSize() == 0) {
             System.out.println("No meals added. Please add a meal.");
-        }
-        else {
-            System.out.println("Type the name of the meal you wish to delete (type back to go back): ");
-            for(int i = 0; i < day.getSize(); i++) {
-                System.out.println(day.getMealString(i));
-    
-            }
-            String input = scanner.next();
-            boolean found = false; 
-            for (int j = 0; j < day.getSize(); j ++) {
-                if (input.equals((day.getMeal(j)).getName())) {
-                    int placeholder = j; 
-                    day.remove(placeholder);  
-                    System.out.println("Meal Succesfully Deleted.");  
-                    found = true; 
-                    break;
-                }
-                else if (input.equals("back")){
-                    displayDayMenu(day);
-                 }
-                else if(j == (day.getSize() - 1) && found == false) {
-                    System.out.println("Invalid meal choice. Please try again. ");
-                    deleteMeals(day);
-                }
-            }
-
+        } else {
+            deleteAction(day);
         }
     }
 
-    //DISPLAYS A SUMMARY OF TOTAL MACROS EATEN IN SELECTED DAY
-    public void viewDailyMacros(Daily day) {
+    // MODIFIES: this
+    // EFFECTS: If valid meal is typed, delete meal from day.
+    // If "back" is typed, return to day menu.
+    // If invalid meal is typed, display error message.
+    public void deleteAction(Daily day) {
+        System.out.println("Type the name of the meal you wish to delete (type back to go back): ");
+        for (int i = 0; i < day.getSize(); i++) {
+            System.out.println(day.getMealString(i));
+        }
+        scanner.nextLine();
+        String input = scanner.nextLine();
+        boolean found = false;
+        for (int j = 0; j < day.getSize(); j++) {
+            if (input.equals((day.getMeal(j)).getName())) {
+                int placeholder = j;
+                day.remove(placeholder);
+                System.out.println("Meal Succesfully Deleted.");
+                found = true;
+                break;
+            } else if (input.equals("back")) {
+                displayDayMenu(day);
+            } else if (j == (day.getSize() - 1) && found == false) {
+                System.out.println("Invalid meal choice. Please try again. ");
+                deleteMeals(day);
+            }
+        }
+    }
+
+    // DISPLAYS A SUMMARY OF TOTAL MACROS EATEN IN SELECTED DAY
+    public void viewDailyMacros(Daily day, GoalList goallist) {
         int totalCalories = 0;
         int totalCarbs = 0;
         int totalProtein = 0;
         int totalFat = 0;
 
-        for (int i = 0; i<day.getSize(); i++) {
+        for (int i = 0; i < day.getSize(); i++) {
             totalCalories += day.getMeal(i).getCalories();
-            totalCarbs += day.getMeal(i).getCalories();
-            totalProtein += day.getMeal(i).getCalories();
-            totalFat += day.getMeal(i).getCalories();
+            totalCarbs += day.getMeal(i).getCarbohydrates();
+            totalProtein += day.getMeal(i).getProteins();
+            totalFat += day.getMeal(i).getFats();
         }
 
-        System.out.println("Total Calories: "  + totalCalories);
-        System.out.println("Total Carbohydrates: "  + totalCarbs);
-        System.out.println("Total Protein: "  + totalProtein);
-        System.out.println("Total Fats: "  + totalFat);
+        System.out.println("Total Calories: " + totalCalories);
+        System.out.println("Total Carbohydrates: " + totalCarbs);
+        System.out.println("Total Protein: " + totalProtein);
+        System.out.println("Total Fats: " + totalFat);
+        System.out.println("add - Add macros to goals");
+        System.out.println("back - Return to menu");
+        scanner.nextLine();
+        String add = scanner.nextLine();
+        if (add.equals("back")) {
+            displayMenu();
+        } else if (add.equals("add")) {
+            for (int i = 0; i < goallist.getSize(); i++) {
+                Goal a = goallist.getGoal(i);
+                if (a.getObjective().equals("Calorie Goal")) {
+                    a.increaseGoalProgress(totalCalories);
+                } else if (a.getObjective().equals("Carb Goal")) {
+                    a.increaseGoalProgress(totalCarbs);
+                } else if (a.getObjective().equals("Protein Goal")) {
+                    a.increaseGoalProgress(totalProtein);
+                } else if (a.getObjective().equals("Fat Goal")) {
+                    a.increaseGoalProgress(totalFat);
+                }
+            }
 
-        
+            System.out.println("Macros added to goals!");
+        }
+
     }
-    
 
+    // MUST HAVE A MARK AS COMPELETED NOTIFICATION
+    public void goalMenu() {
+        System.out.println("Select a type of goal: ");
+        System.out.println("1 - Water Goal");
+        System.out.println("2 - Calorie Goal");
+        System.out.println("3 - Carb Goal");
+        System.out.println("4 - Protein Goal");
+        System.out.println("5 - Fat Goal");
 
-    public void divider () {
+        int input = scanner.nextInt();
+
+        handleGoalInput(input);
+
+    }
+
+    public void handleGoalInput(int input) {
+        switch (input) {
+            case 1:
+                waterGoal();
+                break;
+
+            case 2:
+                calorieGoal();
+                break;
+            case 3:
+                carbGoal();
+                break;
+            case 4:
+                proteinGoal();
+                break;
+            case 5:
+                fatGoal();
+                break;
+            default:
+                System.out.println("Invalid option selected, please try again.");
+                break;
+        }
+    }
+
+    public void waterGoal() {
+        System.out.println("What is your water goal per day (liters)?");
+        int liter = scanner.nextInt();
+        Goal water = new Goal("Water Goal", liter);
+        goallist.addGoal(water);
+        System.out.println("Water Goal Added!");
+
+    }
+
+    public void calorieGoal() {
+        System.out.println("What is your calorie goal?");
+        int cal = scanner.nextInt();
+        Goal calorie = new Goal("Calorie Goal", cal);
+        goallist.addGoal(calorie);
+        System.out.println("Calorie Goal Added!");
+    }
+
+    public void carbGoal() {
+        System.out.println("What is your carb goal (grams)?");
+        int carb = scanner.nextInt();
+        Goal carbohydrate = new Goal("Carb Goal", carb);
+        goallist.addGoal(carbohydrate);
+        System.out.println("Carbohydrate Goal Added!");
+    }
+
+    public void proteinGoal() {
+        System.out.println("What is your protein goal?");
+        int pro = scanner.nextInt();
+        Goal protein = new Goal("Protein Goal", pro);
+        goallist.addGoal(protein);
+        System.out.println("Protein Goal Added!");
+    }
+
+    public void fatGoal() {
+        System.out.println("What is your fat goal?");
+        int f = scanner.nextInt();
+        Goal fat = new Goal("Fat Goal", f);
+        goallist.addGoal(fat);
+        System.out.println("Fat Goal Added!");
+    }
+
+    public void viewGoalProgress() {
+
+        if (goallist.getSize() == 0) {
+            System.out.println("You have no goals. Try adding one!");
+        } else {
+            for (int i = 0; i < goallist.getSize(); i++) {
+                System.out.println(goallist.getGoal(i).toString());
+            }
+
+            System.out.println("edit - edit a goal");
+            System.out.println("delete - Delete a goal");
+            System.out.println("back - Return to main menu");
+            scanner.nextLine();
+            String input = scanner.nextLine();
+
+            if (input.equals("back")) {
+                displayMenu();
+            } else if (input.equals("edit")) {
+                editGoalMenu();
+            } else if (input.equals("delete")) {
+                deleteGoalMenu();
+            }
+        }
+    }
+
+    public void deleteGoalMenu() {
+        for (int i = 0; i < goallist.getSize(); i++) {
+            System.out.println((i + 1) + " - " + goallist.getGoal(i).toString());
+        }
+        System.out.println("Select goal you wish to delete");
+        int input = scanner.nextInt();
+        goallist.removeGoal(input - 1);
+        System.out.println("Goal Successfully Deleted!");
+    }
+
+    public void editGoalMenu() {
+        for (int i = 0; i < goallist.getSize(); i++) {
+            System.out.println((i + 1) + " - " + goallist.getGoal(i).toString());
+        }
+        System.out.println("Select goal you wish to edit");
+        int input = scanner.nextInt();
+
+        editGoal(input);
+
+    }
+
+    public void editGoal(int input) {
+        Goal a = goallist.getGoal(input - 1);
+        System.out.println("What is your new goal?");
+        int newgoal = scanner.nextInt();
+        a.setGoal(newgoal);
+        System.out.println("What is the current goal progress?");
+        int newprog = scanner.nextInt();
+        a.setGoalProgress(newprog);
+        System.out.println("Goal Successfully Edited");
+    }
+
+    public void divider() {
         System.out.println("-----------------------------");
     }
-    
-
 
 }
