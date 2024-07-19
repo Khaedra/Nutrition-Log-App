@@ -92,7 +92,8 @@ public class NutritionLog {
 
     public void newDay() {
         System.out.println("Enter Date: ");
-        String date = scanner.next();
+        scanner.nextLine();
+        String date = scanner.nextLine();
 
         Daily day = new Daily(date);
         alltime.add(day);
@@ -173,7 +174,8 @@ public class NutritionLog {
             for (int i = 0; i < alltime.size(); i++) {
                 System.out.println((alltime.get(i)).getDate());
             }
-            String input = scanner.next();
+            scanner.nextLine();
+            String input = scanner.nextLine();
 
             goIntoDays(input);
         }
@@ -210,7 +212,8 @@ public class NutritionLog {
         for (int i = 0; i < day.getSize(); i++) {
             System.out.println(day.getMealString(i));
         }
-        String input = scanner.next();
+       // scanner.nextLine();
+        String input = scanner.nextLine();
         Boolean found = false;
         for (int j = 0; j < day.getSize(); j++) {
             if (input.equals((day.getMeal(j)).getName())) {
@@ -230,7 +233,7 @@ public class NutritionLog {
 
     public void editMenu(Daily day, int index) {
         System.out.println("Enter food item: ");
-        scanner.nextLine();
+        //scanner.nextLine();
         String name = scanner.nextLine();
         System.out.println("Enter calories: ");
         int calories = scanner.nextInt();
@@ -287,7 +290,9 @@ public class NutritionLog {
         }
     }
 
+    
     // DISPLAYS A SUMMARY OF TOTAL MACROS EATEN IN SELECTED DAY
+    
     public void viewDailyMacros(Daily day, GoalList goallist) {
         int totalCalories = 0;
         int totalCarbs = 0;
@@ -326,6 +331,7 @@ public class NutritionLog {
             }
 
             System.out.println("Macros added to goals!");
+            displayMenu();
         }
 
     }
