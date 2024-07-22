@@ -17,7 +17,8 @@ This friendly interface will also allow you to log multiple days and view weeks 
 3. As a user, I want to be able to set a goal and be notified when I reach my goal.
 4. As a user, I want to be able to edit or delete meals if I make a mistake. 
 5. As a user, I want to be able to view a summary of total macronutrients consumed every day.
-
+6. As a user, I want to be able to have the option to save the current state of my days and goals.
+7. As a user, I want to be able to load my days and goals from file. 
 
 
 

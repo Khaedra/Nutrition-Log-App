@@ -212,7 +212,7 @@ public class NutritionLog {
         for (int i = 0; i < day.getSize(); i++) {
             System.out.println(day.getMealString(i));
         }
-       // scanner.nextLine();
+        scanner.nextLine();
         String input = scanner.nextLine();
         Boolean found = false;
         for (int j = 0; j < day.getSize(); j++) {
