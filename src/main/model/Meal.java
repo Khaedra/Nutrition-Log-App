@@ -1,8 +1,10 @@
 package model;
+import org.json.JSONObject;
+import persistence.Writable;
 
 // Represents a single meal eaten. Includes a name, calories, carbohydrates, proteins, and fats.
-//
-public class Meal {
+
+public class Meal implements Writable {
 
     private String name;
     private int calories;
@@ -10,8 +12,8 @@ public class Meal {
     private int proteins;
     private int fats;
 
-    // EFFECTS: creates a meal with name, calories, carbohydrates, proteins, and
-    // fats
+    // EFFECTS: creates a meal with name, calories, carbohydrates, proteins, and fats
+
     public Meal(String name, int calories, int carbohydrates, int proteins, int fats) {
         this.name = name;
         this.calories = calories;
@@ -60,12 +62,23 @@ public class Meal {
         this.fats = fats;
     }
 
-    // Returns a string summarizing a meal.
+    // EFFECTS: Returns a string summarizing a meal.
     public String toString() {
         String summary = "Name: " + name + "\n Calories: " + calories
                 + "\n Carbohydrates: " + carbohydrates + "g\n Protein: " + proteins + "g\n Fat: " + fats + "g";
 
         return summary;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("calories", calories);
+        json.put("carbohydrates", carbohydrates);
+        json.put("proteins", proteins);
+        json.put("fats", fats);
+        return json;
     }
 
 }

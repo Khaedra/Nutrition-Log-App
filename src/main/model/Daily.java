@@ -4,13 +4,17 @@ import model.Meal;
 import java.util.ArrayList;
 import model.Daily;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 //Represents a days worth of meals. Includes a date. 
-public class Daily {
+public class Daily implements Writable {
 
     private ArrayList<Meal> log;
     private String date;
 
-    // Creates a new Day with a date
+    // Creates a new Day with a date and empty list of meals
     public Daily(String date) {
         log = new ArrayList<Meal>();
         this.date = date;
@@ -28,17 +32,17 @@ public class Daily {
         log.add(index, meal);
     }
 
-    // returns amount of meals in this day
+    // EFFECTS: returns amount of meals in this day
     public int getSize() {
         return log.size();
     }
 
-    // Returns a summary of a specific meal
+    // EFFECTS: Returns a string summary of a specific meal
     public String getMealString(int index) {
         return (log.get(index)).toString();
     }
 
-    // Returns the meal object at index
+    // EFFECTS: Returns the meal object at index
     public Meal getMeal(int index) {
         return log.get(index);
     }
@@ -50,16 +54,35 @@ public class Daily {
     public void setDate(String date) {
         this.date = date;
     }
-
-    // Removes meal at index
+    // REQUIRES: index is valid 
+    // EFFECTS: Removes meal at index
     public void remove(int index) {
         log.remove(index);
     }
 
-    // Returns list of meals in the day
+  
     public ArrayList<Meal> getLog() {
         return log;
 
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("log", log);
+        json.put("date", date);
+        return json;
+    }
+
+    // EFFECTS: returns meals in this day as a JSON array
+    private JSONArray mealstoJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Meal m : log) {
+            jsonArray.put(m.toJson());
+        }
+
+        return jsonArray;
     }
 
 }

@@ -1,15 +1,18 @@
 package model;
+import org.json.JSONObject;
+import persistence.Writable;
 
-//Represents a single goal. A goal has an objective, a goal number,
+// Represents a single goal. A goal has an objective, a goal number,
 // the current progress towards the goal, and a status of being compelete or not. 
-public class Goal {
+public class Goal implements Writable {
 
     private String objective;
     private int goal;
     private int goalProgress;
     private boolean status;
+    
 
-    // Creates a goal
+    // Creates a goal with an objetive, goal, goal progress, and status. 
     public Goal(String objective, int goal) {
         this.objective = objective;
         this.goal = goal;
@@ -50,7 +53,9 @@ public class Goal {
         this.status = status;
     }
 
-    // increases goal progress by amount
+    // REQUIRES: amount >= 0
+    // MODIFIES: this
+    // EFFECTS: increases goal progress by amount. 
     public void increaseGoalProgress(int amount) {
         goalProgress += amount;
     }
@@ -62,7 +67,7 @@ public class Goal {
 
     }
 
-    // Returns a summary of the goal progress/goal.
+    // Returns a string summary of goal and goal progress. 
     // if the goal progress > goal, mark as COMPLETE
     public String toString() {
 
@@ -74,6 +79,16 @@ public class Goal {
         }
 
         return result;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("objective", objective);
+        json.put("goal", goal);
+        json.put("goalProgress", goalProgress);
+        json.put("status", status);
+        return json;
     }
 
 }

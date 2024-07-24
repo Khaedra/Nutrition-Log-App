@@ -2,6 +2,12 @@ package ui;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import model.Daily;
 import model.Meal;
@@ -12,15 +18,20 @@ import model.GoalList;
 //Handles the creation and procedures of the nutrition app. 
 public class NutritionLog {
 
+    private static final String JSON_STORE = "./data/nutrition.json";
     private Scanner scanner;
     private boolean programRunning;
     private ArrayList<Daily> alltime;
     private GoalList goallist;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // MODIFIES: this
     // EFFECTS: prints out the welcome menu
-    public NutritionLog() {
+    public NutritionLog() throws FileNotFoundException {
         init();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         divider();
         System.out.println("Welcome to the Nutrition Log!");
         divider();
@@ -60,6 +71,9 @@ public class NutritionLog {
         System.out.println("4 - View Goal Progress"); // MUST HAVE A MARK AS COMPELETED NOTIFICATION
         System.out.println("5 - Weekly Overview");
         System.out.println("6 - All Time Overview");
+        System.out.println("7 - Save log to file");
+        System.out.println("8 - Load log from file");
+        System.out.println("9 - Quit application");
 
     }
 
@@ -85,9 +99,26 @@ public class NutritionLog {
             case 4:
                 viewGoalProgress();
                 break;
+
+            case 7:
+                saveLog();
+                break;
+            
+            case 8: 
+                loadLog();
+                break;
+
+            case 9: 
+                quit();
+                break;
             default:
                 System.out.println("Invalid option inputted. Please try again.");
         }
+    }
+
+    public void quit() {
+        programRunning = false; 
+        System.out.println("See you again!");
     }
 
     public void newDay() {
@@ -471,6 +502,35 @@ public class NutritionLog {
         int newprog = scanner.nextInt();
         a.setGoalProgress(newprog);
         System.out.println("Goal Successfully Edited");
+    }
+
+
+
+    // EFFECTS: saves the workroom to file
+    private void saveLog() {
+        try {
+            jsonWriter.open();
+            jsonWriter.writeGoalList(goallist);
+            for (Daily d : alltime) {
+                jsonWriter.writeDaily(d);
+            }
+            jsonWriter.close();
+            System.out.println("Saved log to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadLog() {
+        try {
+            goallist = jsonReader.readGoalList();
+            //alltime = jsonReader.readDaily();
+            System.out.println("Loaded log from" + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
     public void divider() {
