@@ -1,6 +1,16 @@
 {"goallist": [{
-    "goal": 100,
+    "goal": 3,
     "goalProgress": 0,
-    "objective": "Calorie Goal",
+    "objective": "Water Goal",
     "status": false
+}]}{"alltime": [{
+    "date": "july",
+    "size": 1,
+    "log": [{
+        "carbohydrates": 1,
+        "fats": 1,
+        "proteins": 1,
+        "name": "mac",
+        "calories": 1
+    }]
 }]}

@@ -1,6 +1,8 @@
 package persistence;
 import model.Daily;
 import model.GoalList;
+import model.NutritionLog;
+
 import org.json.JSONObject;
 
 
@@ -35,6 +37,10 @@ public class JsonWriter {
     // EFFECTS: writes JSON representation of daily to file
     public void writeDaily(Daily d) {
         JSONObject json = d.toJson();
+        saveToFile(json.toString(TAB));
+    }
+    public void writeNutritionLog(NutritionLog nl) {
+        JSONObject json = nl.toJson();
         saveToFile(json.toString(TAB));
     }
 

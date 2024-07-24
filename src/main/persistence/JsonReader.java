@@ -4,11 +4,13 @@ import model.Daily;
 import model.Goal;
 import model.GoalList;
 import model.Meal;
+import model.NutritionLog;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.json.*;
@@ -37,6 +39,12 @@ public class JsonReader {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseDaily(jsonObject);
+    }
+
+    public NutritionLog readNutritionLog() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseNutritionLog(jsonObject);
     }
 
     
@@ -69,7 +77,35 @@ public class JsonReader {
         return d;
     }
 
-    // MODIFIES: wr
+    // EFFECTS: parses Nutrition log from JSON Object and returns it
+    private NutritionLog parseNutritionLog(JSONObject jsonObject) {
+        NutritionLog nl = new NutritionLog();
+        addDays(nl, jsonObject);
+        return nl;
+    }
+
+    // MODIFIES: nl
+    // EFFECTS: parses days from JSON object and adds them to nutrition log
+    private void addDays(NutritionLog nl, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("alltime");
+        for (Object json: jsonArray) {
+            JSONObject nextDay = (JSONObject) json;
+            addDay(nl, nextDay);
+        }
+    }
+
+    // MODIFIES: nl
+    // EFFECTS: parses days from JSON object and adds them to nutrition log
+    private void addDay(NutritionLog nl, JSONObject jsonObject) {
+        String date = jsonObject.getString("date");
+        JSONArray log = jsonObject.getJSONArray("log");
+        Daily d = new Daily(date);
+        nl.add(d);
+    }
+
+
+
+    // MODIFIES: d
     // EFFECTS: parses meals from JSON object and adds them to the day
     private void addMeals(Daily d, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("log");
@@ -79,7 +115,7 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
+    // MODIFIES: d
     // EFFECTS: parses meal from JSON object and adds it to day
     private void addMeal(Daily d, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
@@ -91,7 +127,7 @@ public class JsonReader {
         d.addMeal(m);
     }
 
-    // MODIFIES: wr
+    // MODIFIES: gl
     // EFFECTS: parses goals from JSON object and adds them to workroom
     private void addGoals(GoalList gl, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("goallist");
@@ -101,7 +137,7 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
+    // MODIFIES: gl
     // EFFECTS: parses goal from JSON object and adds it to goallist
     private void addGoal(GoalList gl, JSONObject jsonObject) {
         String objective = jsonObject.getString("objective");
