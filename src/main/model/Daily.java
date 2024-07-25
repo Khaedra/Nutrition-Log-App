@@ -20,6 +20,11 @@ public class Daily implements Writable {
         this.date = date;
     }
 
+    public Daily (String date, ArrayList<Meal> log) {
+        this.log = log;
+        this.date = date; 
+    }
+
     // MODIFIES: this
     // EFFECTS: adds a meal to the daily meals
     public void addMeal(Meal meal) {

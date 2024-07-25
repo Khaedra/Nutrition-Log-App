@@ -19,20 +19,25 @@ import model.GoalList;
 //Handles the creation and procedures of the nutrition app. 
 public class NutritionLogApplication {
 
-    private static final String JSON_STORE = "./data/nutrition.json";
+    private static final String JSON_STORE = "./data/goallog.json";
+    private static final String JSON_STORE2 = "./data/daylog.json";
     private Scanner scanner;
     private boolean programRunning;
     private NutritionLog alltime;
     private GoalList goallist;
     private JsonWriter jsonWriter;
+    private JsonWriter jsonWriter2;
     private JsonReader jsonReader;
+    private JsonReader jsonReader2;
 
     // MODIFIES: this
     // EFFECTS: prints out the welcome menu
     public NutritionLogApplication() throws FileNotFoundException {
         init();
         jsonWriter = new JsonWriter(JSON_STORE);
+        jsonWriter2 = new JsonWriter(JSON_STORE2);
         jsonReader = new JsonReader(JSON_STORE);
+        jsonReader2 = new JsonReader(JSON_STORE2);
         divider();
         System.out.println("Welcome to the Nutrition Log!");
         divider();
@@ -511,9 +516,11 @@ public class NutritionLogApplication {
     private void saveLog() {
         try {
             jsonWriter.open();
+            jsonWriter2.open();
             jsonWriter.writeGoalList(goallist);
-            jsonWriter.writeNutritionLog(alltime);
+            jsonWriter2.writeNutritionLog(alltime);
             jsonWriter.close();
+            jsonWriter2.close();
             System.out.println("Saved log to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
@@ -525,7 +532,7 @@ public class NutritionLogApplication {
     private void loadLog() {
         try {
             goallist = jsonReader.readGoalList();
-            //alltime = jsonReader.readNutritionLog();
+            alltime = jsonReader2.readNutritionLog();
             System.out.println("Loaded log from" + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);

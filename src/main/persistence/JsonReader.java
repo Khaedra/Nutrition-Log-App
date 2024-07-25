@@ -99,8 +99,24 @@ public class JsonReader {
     private void addDay(NutritionLog nl, JSONObject jsonObject) {
         String date = jsonObject.getString("date");
         JSONArray log = jsonObject.getJSONArray("log");
-        Daily d = new Daily(date);
+        ArrayList<Meal> reallog = new ArrayList<Meal>();
+        if (log != null) {
+            for (int i = 0; i < log.length(); i++) {
+                reallog.add(JSONTOMEAL((JSONObject)log.get(i)));
+            }
+        }
+        Daily d = new Daily(date, reallog);
         nl.add(d);
+    }
+
+    private Meal JSONTOMEAL (JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        int calories = jsonObject.getInt("calories");
+        int carbohydrates = jsonObject.getInt("carbohydrates");
+        int proteins = jsonObject.getInt("proteins");
+        int fats = jsonObject.getInt("fats");
+        Meal m = new Meal(name, calories, carbohydrates, proteins, fats);
+        return m;
     }
 
 
