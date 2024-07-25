@@ -70,6 +70,7 @@ public class Meal implements Writable {
         return summary;
     }
 
+    // Creates a json object representing a meal.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

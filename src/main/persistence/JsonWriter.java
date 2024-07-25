@@ -1,5 +1,5 @@
 package persistence;
-import model.Daily;
+
 import model.GoalList;
 import model.NutritionLog;
 

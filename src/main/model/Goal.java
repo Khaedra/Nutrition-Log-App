@@ -60,14 +60,14 @@ public class Goal implements Writable {
         goalProgress += amount;
     }
 
-    // returns true if goal is reached
+    // EFFECTS: returns true if goal is reached
     public boolean overGoal() {
         status = true;
         return goalProgress >= goal;
 
     }
 
-    // Returns a string summary of goal and goal progress. 
+    // EFFECTS: Returns a string summary of goal and goal progress. 
     // if the goal progress > goal, mark as COMPLETE
     public String toString() {
 
@@ -81,6 +81,7 @@ public class Goal implements Writable {
         return result;
     }
 
+    // EFFECTS: Creates a json object representing a goal. 
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

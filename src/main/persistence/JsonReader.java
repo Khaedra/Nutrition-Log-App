@@ -63,7 +63,6 @@ public class JsonReader {
 
     // EFFECTS: parses GoalList from JSON object and returns it
     private GoalList parseGoalList(JSONObject jsonObject) {
-
         GoalList gl = new GoalList();
         addGoals(gl, jsonObject);
         return gl;
@@ -109,6 +108,7 @@ public class JsonReader {
         nl.add(d);
     }
 
+    // EFFECTS: converts a json object to a meal.
     private Meal JSONTOMEAL (JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int calories = jsonObject.getInt("calories");

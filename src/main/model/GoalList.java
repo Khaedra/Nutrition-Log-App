@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import model.Goal;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +36,11 @@ public class GoalList implements Writable{
         return goallist.get(index);
     }
 
+    public ArrayList<Goal> getGoalList() {
+        return goallist; 
+    }
+
+    // EFFECTS: Creates a new json object representing a goallist. 
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

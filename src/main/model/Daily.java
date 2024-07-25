@@ -1,6 +1,5 @@
 package model;
 
-import model.Meal;
 import java.util.ArrayList;
 import model.Daily;
 
@@ -20,6 +19,7 @@ public class Daily implements Writable {
         this.date = date;
     }
 
+    // Creates a new day given a log of meals and date. 
     public Daily (String date, ArrayList<Meal> log) {
         this.log = log;
         this.date = date; 
@@ -68,9 +68,9 @@ public class Daily implements Writable {
   
     public ArrayList<Meal> getLog() {
         return log;
-
     }
 
+    // EFFECTS: Creates a new json object out of Daily.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -82,11 +82,9 @@ public class Daily implements Writable {
     // EFFECTS: returns meals in this day as a JSON array
     private JSONArray mealstoJson() {
         JSONArray jsonArray = new JSONArray();
-
         for (Meal m : log) {
             jsonArray.put(m.toJson());
         }
-
         return jsonArray;
     }
 

@@ -1,0 +1,14 @@
+{"goallist": [
+    {
+        "goal": 100,
+        "goalProgress": 0,
+        "status": false,
+        "objective": "Calorie Goal"
+    },
+    {
+        "goal": 20,
+        "goalProgress": 0,
+        "status": false,
+        "objective": "Protein Goal"
+    }
+]}
