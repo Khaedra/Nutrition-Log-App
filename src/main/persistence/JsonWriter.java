@@ -5,7 +5,6 @@ import model.NutritionLog;
 
 import org.json.JSONObject;
 
-
 import java.io.*;
 
 // Represents a writer that writes JSON representation of workroom to file
@@ -21,7 +20,8 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
+    // EFFECTS: opens writer; throws FileNotFoundException if destination file
+    // cannot
     // be opened for writing
     public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(destination));
@@ -33,11 +33,12 @@ public class JsonWriter {
         JSONObject json = gl.toJson();
         saveToFile(json.toString(TAB));
     }
+
     // MODIFIES: this
     // EFFECTS: writes JSON representation of daily to file
     // public void writeDaily(Daily d) {
-    //     JSONObject json = d.toJson();
-    //     saveToFile(json.toString(TAB));
+    // JSONObject json = d.toJson();
+    // saveToFile(json.toString(TAB));
     // }
     public void writeNutritionLog(NutritionLog nl) {
         JSONObject json = nl.toJson();
@@ -56,4 +57,3 @@ public class JsonWriter {
         writer.print(json);
     }
 }
-

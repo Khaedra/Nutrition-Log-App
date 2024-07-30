@@ -7,9 +7,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         try {
             new NutritionLogApplication();
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("Unable to run application: file not found");  
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to run application: file not found");
         }
 
     }

@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import model.Daily;
 
-import org.json.JSONArray;
+// import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -19,10 +19,10 @@ public class Daily implements Writable {
         this.date = date;
     }
 
-    // Creates a new day given a log of meals and date. 
-    public Daily (String date, ArrayList<Meal> log) {
+    // Creates a new day given a log of meals and date.
+    public Daily(String date, ArrayList<Meal> log) {
         this.log = log;
-        this.date = date; 
+        this.date = date;
     }
 
     // MODIFIES: this
@@ -59,13 +59,13 @@ public class Daily implements Writable {
     public void setDate(String date) {
         this.date = date;
     }
-    // REQUIRES: index is valid 
+
+    // REQUIRES: index is valid
     // EFFECTS: Removes meal at index
     public void remove(int index) {
         log.remove(index);
     }
 
-  
     public ArrayList<Meal> getLog() {
         return log;
     }
@@ -80,12 +80,12 @@ public class Daily implements Writable {
     }
 
     // EFFECTS: returns meals in this day as a JSON array
-    private JSONArray mealstoJson() {
-        JSONArray jsonArray = new JSONArray();
-        for (Meal m : log) {
-            jsonArray.put(m.toJson());
-        }
-        return jsonArray;
-    }
+    // private JSONArray mealstoJson() {
+    //     JSONArray jsonArray = new JSONArray();
+    //     for (Meal m : log) {
+    //         jsonArray.put(m.toJson());
+    //     }
+    //     return jsonArray;
+    // }
 
 }

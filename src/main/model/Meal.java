@@ -1,4 +1,5 @@
 package model;
+
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -12,7 +13,8 @@ public class Meal implements Writable {
     private int proteins;
     private int fats;
 
-    // EFFECTS: creates a meal with name, calories, carbohydrates, proteins, and fats
+    // EFFECTS: creates a meal with name, calories, carbohydrates, proteins, and
+    // fats
 
     public Meal(String name, int calories, int carbohydrates, int proteins, int fats) {
         this.name = name;

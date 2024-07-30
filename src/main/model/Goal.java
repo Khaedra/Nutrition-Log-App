@@ -1,4 +1,5 @@
 package model;
+
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -10,9 +11,8 @@ public class Goal implements Writable {
     private int goal;
     private int goalProgress;
     private boolean status;
-    
 
-    // Creates a goal with an objetive, goal, goal progress, and status. 
+    // Creates a goal with an objetive, goal, goal progress, and status.
     public Goal(String objective, int goal) {
         this.objective = objective;
         this.goal = goal;
@@ -55,7 +55,7 @@ public class Goal implements Writable {
 
     // REQUIRES: amount >= 0
     // MODIFIES: this
-    // EFFECTS: increases goal progress by amount. 
+    // EFFECTS: increases goal progress by amount.
     public void increaseGoalProgress(int amount) {
         goalProgress += amount;
     }
@@ -67,7 +67,7 @@ public class Goal implements Writable {
 
     }
 
-    // EFFECTS: Returns a string summary of goal and goal progress. 
+    // EFFECTS: Returns a string summary of goal and goal progress.
     // if the goal progress > goal, mark as COMPLETE
     public String toString() {
 
@@ -81,7 +81,7 @@ public class Goal implements Writable {
         return result;
     }
 
-    // EFFECTS: Creates a json object representing a goal. 
+    // EFFECTS: Creates a json object representing a goal.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -2,24 +2,25 @@ package model;
 
 import java.util.ArrayList;
 
-
-import org.json.JSONArray;
+// import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
 //Represents a list of all current goals
-public class GoalList implements Writable{
+public class GoalList implements Writable {
 
     private ArrayList<Goal> goallist;
 
     public GoalList() {
         goallist = new ArrayList<Goal>();
     }
+
     // MODIFIES: this
     // EFFECTS: Adds a goal to the end of the list
     public void addGoal(Goal goal) {
         goallist.add(goal);
     }
+
     // MODIFIES: this
     // EFFECTS: Removes a goal from the specified index
     public void removeGoal(int index) {
@@ -37,10 +38,10 @@ public class GoalList implements Writable{
     }
 
     public ArrayList<Goal> getGoalList() {
-        return goallist; 
+        return goallist;
     }
 
-    // EFFECTS: Creates a new json object representing a goallist. 
+    // EFFECTS: Creates a new json object representing a goallist.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -48,15 +49,15 @@ public class GoalList implements Writable{
         return json;
     }
 
-    // EFFECTS: returns goals in this goallist as a JSON array
-    private JSONArray goalstoJson() {
-        JSONArray jsonArray = new JSONArray();
+    // // EFFECTS: returns goals in this goallist as a JSON array
+    // private JSONArray goalstoJson() {
+    //     JSONArray jsonArray = new JSONArray();
 
-        for (Goal g : goallist) {
-            jsonArray.put(g.toJson());
-        }
+    //     for (Goal g : goallist) {
+    //         jsonArray.put(g.toJson());
+    //     }
 
-        return jsonArray;
-    }
+    //     return jsonArray;
+    // }
 
 }

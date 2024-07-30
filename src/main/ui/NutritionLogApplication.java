@@ -50,7 +50,7 @@ public class NutritionLogApplication {
     // EFFECTS: INITIALIZES VARAIBLES
     public void init() {
         programRunning = true;
-       alltime = new NutritionLog();
+        alltime = new NutritionLog();
         goallist = new GoalList();
         scanner = new Scanner(System.in);
 
@@ -58,7 +58,6 @@ public class NutritionLogApplication {
 
     // EFFECTS: Shows menu commands and takes input
     public void displayMenu() {
-        showProgress();
         showMenuCommands();
         int input = scanner.nextInt();
         performCommand(input);
@@ -72,7 +71,7 @@ public class NutritionLogApplication {
         System.out.println("2 - Select Day");
         // TODO THE REST OF THESE
         System.out.println("3 - Add Goal");
-        System.out.println("4 - View Goal Progress"); // MUST HAVE A MARK AS COMPELETED NOTIFICATION
+        System.out.println("4 - View Goal Progress");
         System.out.println("5 - Weekly Overview");
         System.out.println("6 - All Time Overview");
         System.out.println("7 - Save log to file");
@@ -81,14 +80,9 @@ public class NutritionLogApplication {
 
     }
 
-    // TODO: Show Daily Progress Goal
-    public void showProgress() {
-
-    }
-
-    //EFFECTS: Handles input from user for main menu
+    // EFFECTS: Handles input from user for main menu
+    @SuppressWarnings("methodlength")
     public void performCommand(int input) {
-
         switch (input) {
             case 1:
                 newDay();
@@ -108,12 +102,12 @@ public class NutritionLogApplication {
             case 7:
                 saveLog();
                 break;
-            
-            case 8: 
+
+            case 8:
                 loadLog();
                 break;
 
-            case 9: 
+            case 9:
                 quit();
                 break;
             default:
@@ -123,12 +117,12 @@ public class NutritionLogApplication {
 
     // EFFECTS: shuts down program
     public void quit() {
-        programRunning = false; 
+        programRunning = false;
         System.out.println("See you again!");
-    }   
+    }
 
-    //MODIFIES: this
-    //EFFECTS: Creates a new day with a date and empty list of meals. 
+    // MODIFIES: this
+    // EFFECTS: Creates a new day with a date and empty list of meals.
     public void newDay() {
         System.out.println("Enter Date: ");
         scanner.nextLine();
@@ -143,12 +137,13 @@ public class NutritionLogApplication {
 
     }
 
-    //EFFECTS: Displays a day menu with functions specific to days. 
+    // EFFECTS: Displays a day menu with functions specific to days.
     public void displayDayMenu(Daily day) {
         System.out.println("1 - Add a meal");
         System.out.println("2 - Edit meal");
         System.out.println("3 - Delete a meal");
-        System.out.println("4 - View Daily Macros"); // TODO
+        System.out.println("4 - View Daily Macros");
+        System.out.println("5 - Back");
 
         int input = scanner.nextInt();
 
@@ -156,7 +151,7 @@ public class NutritionLogApplication {
 
     }
 
-    //EFFECTS: Handles user input for day functions. 
+    // EFFECTS: Handles user input for day functions.
     public void handleDayInput(Daily day, int input, GoalList goallist) {
         switch (input) {
             case 1:
@@ -175,23 +170,25 @@ public class NutritionLogApplication {
                 viewDailyMacros(day, goallist);
                 break;
 
+            case 5:
+                break;
             default:
                 System.out.println("Invalid option inputted. Please try again.");
+                displayDayMenu(day);
 
-                // TODO: add other cases
         }
 
     }
 
-    //MODIFIES: this
-    // EFFECTS: adds a meal to the current day. 
+    // MODIFIES: this
+    // EFFECTS: adds a meal to the current day.
     public void addMeal(Daily day) {
         System.out.println("Enter food item: ");
-        // TODO cant have multiple words
         scanner.nextLine();
         String name = scanner.nextLine();
         System.out.println("Enter calories: ");
-
+        // TODO: ask how to make sure the input is a integer? use requires clause? or
+        // exception catching? also for goal setting.
         int calories = scanner.nextInt();
         System.out.println("Enter carbohydrates (grams): ");
         int carbohydrates = scanner.nextInt();
@@ -207,7 +204,8 @@ public class NutritionLogApplication {
 
     }
 
-    //EFFECTS: Displays all days currently in nutrition log. Prompts user to select date. 
+    // EFFECTS: Displays all days currently in nutrition log. Prompts user to select
+    // date.
     public void displayDays() {
 
         if (alltime.size() == 0) {
@@ -218,6 +216,9 @@ public class NutritionLogApplication {
             for (int i = 0; i < alltime.size(); i++) {
                 System.out.println((alltime.get(i)).getDate());
             }
+            // TODO: ask why you have to enter date twice after you enter it incorrect
+            // once... you cant remove this line otherwise the first time through will
+            // prdouce error.
             scanner.nextLine();
             String input = scanner.nextLine();
 
@@ -226,7 +227,7 @@ public class NutritionLogApplication {
 
     }
 
-    // EFFECTS: Displays day menu for selected date. Otherwise, print invalid. 
+    // EFFECTS: Displays day menu for selected date. Otherwise, print invalid.
     public void goIntoDays(String input) {
         boolean found = false;
 
@@ -244,18 +245,21 @@ public class NutritionLogApplication {
 
     }
 
-    //EFFECTS: determines whether the user is able to edit a meal in the current day.
+    // EFFECTS: determines whether the user is able to edit a meal in the current
+    // day.
     public void editMeals(Daily day) {
         if (day.getSize() == 0) {
             System.out.println("No meals added. Please add a meal.");
+            displayDayMenu(day);
         } else {
             editAction(day);
         }
     }
 
-    //MODIFIES: this
-    // EFFECTS: Prompts the user to enter the name of a meal they wish to edit. If invalid entered, print message to screen.
-    // If back entered, return to day menu. 
+    // MODIFIES: this
+    // EFFECTS: Prompts the user to enter the name of a meal they wish to edit. If
+    // invalid entered, print message to screen.
+    // If back entered, return to day menu.
     public void editAction(Daily day) {
         System.out.println("Type the name of the meal you wish to edit (type back to go back): ");
         for (int i = 0; i < day.getSize(); i++) {
@@ -278,13 +282,13 @@ public class NutritionLogApplication {
                 editMeals(day);
             }
         }
-    }   
+    }
 
-    //MODIFIES: this
-    //EFFECTS: Allows the user to re-enter details for the chosen meal. 
+    // MODIFIES: this
+    // EFFECTS: Allows the user to re-enter details for the chosen meal.
     public void editMenu(Daily day, int index) {
         System.out.println("Enter food item: ");
-        //scanner.nextLine();
+        // scanner.nextLine();
         String name = scanner.nextLine();
         System.out.println("Enter calories: ");
         int calories = scanner.nextInt();
@@ -308,6 +312,7 @@ public class NutritionLogApplication {
     public void deleteMeals(Daily day) {
         if (day.getSize() == 0) {
             System.out.println("No meals added. Please add a meal.");
+            displayDayMenu(day);
         } else {
             deleteAction(day);
         }
@@ -341,9 +346,10 @@ public class NutritionLogApplication {
         }
     }
 
-    //MODIFIES: this
-    //EFFECTS: DISPLAYS A SUMMARY OF TOTAL MACROS EATEN IN SELECTED DAY. Able to add the macros to current goals. 
-    
+    // MODIFIES: this
+    // EFFECTS: DISPLAYS A SUMMARY OF TOTAL MACROS EATEN IN SELECTED DAY. Able to
+    // add the macros to current goals.
+    @SuppressWarnings("methodlength")
     public void viewDailyMacros(Daily day, GoalList goallist) {
         int totalCalories = 0;
         int totalCarbs = 0;
@@ -361,39 +367,43 @@ public class NutritionLogApplication {
         System.out.println("Total Carbohydrates: " + totalCarbs);
         System.out.println("Total Protein: " + totalProtein);
         System.out.println("Total Fats: " + totalFat);
-        System.out.println("add - Add macros to goals");
-        System.out.println("back - Return to menu");
+        System.out.println("1 - Add macros to goals");
+        System.out.println("2 - Return to menu");
         scanner.nextLine();
-        String add = scanner.nextLine();
-        if (add.equals("back")) {
-            displayMenu();
-        } else if (add.equals("add")) {
-            for (int i = 0; i < goallist.getSize(); i++) {
-                Goal a = goallist.getGoal(i);
-                if (a.getObjective().equals("Calorie Goal")) {
-                    a.increaseGoalProgress(totalCalories);
-                } else if (a.getObjective().equals("Carb Goal")) {
-                    a.increaseGoalProgress(totalCarbs);
-                } else if (a.getObjective().equals("Protein Goal")) {
-                    a.increaseGoalProgress(totalProtein);
-                } else if (a.getObjective().equals("Fat Goal")) {
-                    a.increaseGoalProgress(totalFat);
+        int add = scanner.nextInt();
+
+        switch (add) {
+            case 1:
+                for (int i = 0; i < goallist.getSize(); i++) {
+                    Goal a = goallist.getGoal(i);
+                    if (a.getObjective().equals("Calorie Goal")) {
+                        a.increaseGoalProgress(totalCalories);
+                    } else if (a.getObjective().equals("Carb Goal")) {
+                        a.increaseGoalProgress(totalCarbs);
+                    } else if (a.getObjective().equals("Protein Goal")) {
+                        a.increaseGoalProgress(totalProtein);
+                    } else if (a.getObjective().equals("Fat Goal")) {
+                        a.increaseGoalProgress(totalFat);
+                    }
                 }
-            }
 
-            System.out.println("Macros added to goals!");
-            displayMenu();
+                System.out.println("Macros added to goals!");
+                displayMenu();
+                break;
+            case 2:
+                displayMenu();
+                break;
         }
-
     }
 
-    //EFFECTS: Displays a goal menu with options. 
+    // EFFECTS: Displays a goal menu with options.
     public void goalMenu() {
         System.out.println("Select a type of goal: ");
         System.out.println("1 - Calorie Goal");
         System.out.println("2 - Carb Goal");
         System.out.println("3 - Protein Goal");
         System.out.println("4 - Fat Goal");
+        System.out.println("5 - Back");
 
         int input = scanner.nextInt();
 
@@ -401,7 +411,7 @@ public class NutritionLogApplication {
 
     }
 
-    //EFFECTS: handles user input from goal menu
+    // EFFECTS: handles user input from goal menu
     public void handleGoalInput(int input) {
         switch (input) {
             case 1:
@@ -417,14 +427,17 @@ public class NutritionLogApplication {
             case 4:
                 fatGoal();
                 break;
+            case 5:
+                break;
             default:
                 System.out.println("Invalid option selected, please try again.");
+                goalMenu();
                 break;
         }
     }
 
-    //MODIFIES: this
-    //EFFECTS: Creates a new calorie goal 
+    // MODIFIES: this
+    // EFFECTS: Creates a new calorie goal
     public void calorieGoal() {
         System.out.println("What is your calorie goal?");
         int cal = scanner.nextInt();
@@ -433,8 +446,8 @@ public class NutritionLogApplication {
         System.out.println("Calorie Goal Added!");
     }
 
-    //MODIFIES: this
-    //EFFECTS: Creates a new carbohydrate goal 
+    // MODIFIES: this
+    // EFFECTS: Creates a new carbohydrate goal
     public void carbGoal() {
         System.out.println("What is your carb goal (grams)?");
         int carb = scanner.nextInt();
@@ -443,8 +456,8 @@ public class NutritionLogApplication {
         System.out.println("Carbohydrate Goal Added!");
     }
 
-    //MODIFIES: this
-    //EFFECTS: Creates a new protein goal 
+    // MODIFIES: this
+    // EFFECTS: Creates a new protein goal
     public void proteinGoal() {
         System.out.println("What is your protein goal?");
         int pro = scanner.nextInt();
@@ -453,8 +466,8 @@ public class NutritionLogApplication {
         System.out.println("Protein Goal Added!");
     }
 
-    //MODIFIES: this
-    //EFFECTS: Creates a new fat goal 
+    // MODIFIES: this
+    // EFFECTS: Creates a new fat goal
     public void fatGoal() {
         System.out.println("What is your fat goal?");
         int f = scanner.nextInt();
@@ -463,9 +476,9 @@ public class NutritionLogApplication {
         System.out.println("Fat Goal Added!");
     }
 
-    //EFFECTS: displays menu showing different commands that affect goals. 
+    // EFFECTS: displays menu showing different commands that affect goals.
+    @SuppressWarnings("methodlength")
     public void viewGoalProgress() {
-
         if (goallist.getSize() == 0) {
             System.out.println("You have no goals. Try adding one!");
         } else {
@@ -473,24 +486,33 @@ public class NutritionLogApplication {
                 System.out.println(goallist.getGoal(i).toString());
             }
 
-            System.out.println("edit - edit a goal");
-            System.out.println("delete - Delete a goal");
-            System.out.println("back - Return to main menu");
-            scanner.nextLine();
-            String input = scanner.nextLine();
+            System.out.println("1 - edit a goal");
+            System.out.println("2 - Delete a goal");
+            System.out.println("3 - Return to main menu");
+            // scanner.nextLine();
+            int input = scanner.nextInt();
+            switch (input) {
+                case 1:
+                    editGoalMenu();
+                    break;
+                case 2:
+                    deleteGoalMenu();
+                    break;
+                case 3:
+                    displayMenu();
+                    break;
 
-            if (input.equals("back")) {
-                displayMenu();
-            } else if (input.equals("edit")) {
-                editGoalMenu();
-            } else if (input.equals("delete")) {
-                deleteGoalMenu();
+                default:
+                    System.out.println("Invalid option. Try again.");
+                    viewGoalProgress();
+                    break;
             }
+
         }
     }
 
-    //MODIFIES: this
-    //EFFECTS: deletes the goal that user specifies. 
+    // MODIFIES: this
+    // EFFECTS: deletes the goal that user specifies.
     public void deleteGoalMenu() {
         for (int i = 0; i < goallist.getSize(); i++) {
             System.out.println((i + 1) + " - " + goallist.getGoal(i).toString());
@@ -500,8 +522,8 @@ public class NutritionLogApplication {
         goallist.removeGoal(input - 1);
         System.out.println("Goal Successfully Deleted!");
     }
-    
-    //EFFECTS: Prompts the user to select which goal they wish to edit. 
+
+    // EFFECTS: Prompts the user to select which goal they wish to edit.
     public void editGoalMenu() {
         for (int i = 0; i < goallist.getSize(); i++) {
             System.out.println((i + 1) + " - " + goallist.getGoal(i).toString());
@@ -513,10 +535,10 @@ public class NutritionLogApplication {
 
     }
 
-    //TODO: input must be valid
-    //REQUIRES: input must be valid. 
-    //MODIFIES: this
-    //EFFECTS: Prompts the user to edit the details of the selected goal. 
+    // TODO: input must be valid
+    // REQUIRES: input must be valid.
+    // MODIFIES: this
+    // EFFECTS: Prompts the user to edit the details of the selected goal.
     public void editGoal(int input) {
         Goal a = goallist.getGoal(input - 1);
         System.out.println("What is your new goal?");
@@ -527,8 +549,6 @@ public class NutritionLogApplication {
         a.setGoalProgress(newprog);
         System.out.println("Goal Successfully Edited");
     }
-
-
 
     // EFFECTS: saves the workroom to file
     private void saveLog() {
@@ -557,7 +577,7 @@ public class NutritionLogApplication {
         }
     }
 
-    //EFFECTS: prints divider. 
+    // EFFECTS: prints divider.
     public void divider() {
         System.out.println("-----------------------------");
     }

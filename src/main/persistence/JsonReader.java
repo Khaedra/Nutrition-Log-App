@@ -47,9 +47,6 @@ public class JsonReader {
         return parseNutritionLog(jsonObject);
     }
 
-    
-    
-
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
@@ -87,7 +84,7 @@ public class JsonReader {
     // EFFECTS: parses days from JSON object and adds them to nutrition log
     private void addDays(NutritionLog nl, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("alltime");
-        for (Object json: jsonArray) {
+        for (Object json : jsonArray) {
             JSONObject nextDay = (JSONObject) json;
             addDay(nl, nextDay);
         }
@@ -101,7 +98,7 @@ public class JsonReader {
         ArrayList<Meal> reallog = new ArrayList<Meal>();
         if (log != null) {
             for (int i = 0; i < log.length(); i++) {
-                reallog.add(JSONTOMEAL((JSONObject)log.get(i)));
+                reallog.add(jsonToMeal((JSONObject) log.get(i)));
             }
         }
         Daily d = new Daily(date, reallog);
@@ -109,7 +106,7 @@ public class JsonReader {
     }
 
     // EFFECTS: converts a json object to a meal.
-    private Meal JSONTOMEAL (JSONObject jsonObject) {
+    private Meal jsonToMeal(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int calories = jsonObject.getInt("calories");
         int carbohydrates = jsonObject.getInt("carbohydrates");
@@ -118,8 +115,6 @@ public class JsonReader {
         Meal m = new Meal(name, calories, carbohydrates, proteins, fats);
         return m;
     }
-
-
 
     // MODIFIES: d
     // EFFECTS: parses meals from JSON object and adds them to the day
@@ -162,4 +157,3 @@ public class JsonReader {
         gl.addGoal(g);
     }
 }
-

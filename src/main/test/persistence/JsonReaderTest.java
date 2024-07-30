@@ -1,6 +1,5 @@
 package test.persistence;
 
-
 import model.Daily;
 import model.Goal;
 import model.GoalList;
@@ -27,6 +26,7 @@ class JsonReaderTest extends JsonTest {
             // pass
         }
     }
+
     @Test
     void testReaderNLNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
@@ -48,7 +48,6 @@ class JsonReaderTest extends JsonTest {
             fail("Couldn't read from file");
         }
     }
-
 
     @Test
     void testReaderGeneralGoalList() {

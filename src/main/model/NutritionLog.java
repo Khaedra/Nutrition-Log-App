@@ -2,12 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
+// import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
 // Represents a list of days the user has added. 
-public class NutritionLog implements Writable{
+public class NutritionLog implements Writable {
     private ArrayList<Daily> alltime;
 
     public NutritionLog() {
@@ -20,8 +20,8 @@ public class NutritionLog implements Writable{
         alltime.add(day);
     }
 
-    // EFFECTS: returns the number of days added. 
-    public int size(){
+    // EFFECTS: returns the number of days added.
+    public int size() {
         return alltime.size();
     }
 
@@ -33,7 +33,7 @@ public class NutritionLog implements Writable{
         return alltime;
     }
 
-    //EFFECTS: Creates a json object representing a nutrition log. 
+    // EFFECTS: Creates a json object representing a nutrition log.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -42,16 +42,14 @@ public class NutritionLog implements Writable{
     }
 
     // EFFECTS: returns days in this nutritionlog as a JSON array
-    private JSONArray daystoJson() {
-        JSONArray jsonArray = new JSONArray();
+    // private JSONArray daystoJson() {
+    //     JSONArray jsonArray = new JSONArray();
 
-        for (Daily d : alltime) {
-            jsonArray.put(d.toJson());
-        }
+    //     for (Daily d : alltime) {
+    //         jsonArray.put(d.toJson());
+    //     }
 
-        return jsonArray;
-    }
-
-    
+    //     return jsonArray;
+    // }
 
 }

@@ -4,7 +4,6 @@ import model.Meal;
 import model.Daily;
 import model.Goal;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonTest {
@@ -15,6 +14,7 @@ public class JsonTest {
         assertEquals(protein, meal.getProteins());
         assertEquals(fat, meal.getFats());
     }
+
     protected void checkGoal(String objective, int goal, Goal g) {
         assertEquals(objective, g.getObjective());
         assertEquals(goal, g.getGoal());
