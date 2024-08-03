@@ -40,7 +40,7 @@ class JsonReaderTest extends JsonTest {
 
     @Test
     void testGLEmpty() {
-        JsonReader reader = new JsonReader("./data/GLemptyTest.json");
+        JsonReader reader = new JsonReader("./data/testGLempty.json");
         try {
             GoalList gl = reader.readGoalList();
             assertEquals(0, gl.getSize());

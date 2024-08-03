@@ -2,13 +2,13 @@
     {
         "goal": 100,
         "goalProgress": 0,
-        "status": false,
-        "objective": "Calorie Goal"
+        "objective": "Calorie Goal",
+        "status": false
     },
     {
         "goal": 20,
         "goalProgress": 0,
-        "status": false,
-        "objective": "Protein Goal"
+        "objective": "Protein Goal",
+        "status": false
     }
 ]}

@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 //Represents a days worth of meals. Includes a date. 
-public class Daily implements Writable {
+public class Daily {
 
     private ArrayList<Meal> log;
     private String date;
@@ -70,14 +70,14 @@ public class Daily implements Writable {
         return log;
     }
 
-    // EFFECTS: Creates a new json object out of Daily.
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("log", log);
-        json.put("date", date);
-        return json;
-    }
+    // // EFFECTS: Creates a new json object out of Daily.
+    // @Override
+    // public JSONObject toJson() {
+    //     JSONObject json = new JSONObject();
+    //     json.put("log", log);
+    //     json.put("date", date);
+    //     return json;
+    // }
 
     // EFFECTS: returns meals in this day as a JSON array
     // private JSONArray mealstoJson() {

@@ -2,12 +2,15 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestDaily {
 
     Daily day; 
+    Daily day2;
     Meal meal;
     Meal meal2;
     Meal meal3;
@@ -15,6 +18,7 @@ public class TestDaily {
     @BeforeEach
     void runBefore() {
         day = new Daily("july");
+        day2 = new Daily("march", new ArrayList<Meal>());
         meal2 = new Meal("mac", 0, 0, 0, 0);
         meal = new Meal("pizza", 0, 0, 0, 0);
         meal3 = new Meal("Pizza", 800, 36, 12, 10);
@@ -25,6 +29,13 @@ public class TestDaily {
         assertEquals(0, day.getSize());
         assertEquals("july", day.getDate());
         assertTrue(day.getLog().isEmpty());
+    }
+
+    @Test
+    void testConstructor2() {
+        assertEquals(0, day2.getSize());
+        assertEquals("march", day2.getDate());
+        assertTrue(day2.getLog().isEmpty());
     }
 
 
@@ -39,7 +50,7 @@ public class TestDaily {
     @Test 
     void testGetMealString() {
         day.addMeal(meal3);
-        assertEquals(day.getMealString(0), "Name: Pizza\n Calories: 800\n Carbohydrates: 36g\n Protein: " + 
+        assertEquals(day.getMealString(0), " Name: Pizza\n Calories: 800\n Carbohydrates: 36g\n Protein: " + 
     "12g\n Fat: 10g");
 
     }

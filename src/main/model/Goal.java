@@ -5,7 +5,7 @@ import persistence.Writable;
 
 // Represents a single goal. A goal has an objective, a goal number,
 // the current progress towards the goal, and a status of being compelete or not. 
-public class Goal implements Writable {
+public class Goal  {
 
     private String objective;
     private int goal;
@@ -81,15 +81,15 @@ public class Goal implements Writable {
         return result;
     }
 
-    // EFFECTS: Creates a json object representing a goal.
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("objective", objective);
-        json.put("goal", goal);
-        json.put("goalProgress", goalProgress);
-        json.put("status", status);
-        return json;
-    }
+    // // EFFECTS: Creates a json object representing a goal.
+    // @Override
+    // public JSONObject toJson() {
+    //     JSONObject json = new JSONObject();
+    //     json.put("objective", objective);
+    //     json.put("goal", goal);
+    //     json.put("goalProgress", goalProgress);
+    //     json.put("status", status);
+    //     return json;
+    // }
 
 }

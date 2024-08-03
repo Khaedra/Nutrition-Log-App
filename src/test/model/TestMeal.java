@@ -56,7 +56,7 @@ public class TestMeal {
 
     @Test
     void testToString() {
-    assertEquals("Name: Pizza\n Calories: 800\n Carbohydrates: 36g\n Protein: " + 
+    assertEquals(" Name: Pizza\n Calories: 800\n Carbohydrates: 36g\n Protein: " + 
     "12g\n Fat: 10g", pizza.toString());
     }
 }

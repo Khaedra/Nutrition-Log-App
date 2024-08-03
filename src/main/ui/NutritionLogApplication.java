@@ -69,7 +69,6 @@ public class NutritionLogApplication {
         System.out.println("Select an option:");
         System.out.println("1 - New Day");
         System.out.println("2 - Select Day");
-        // TODO THE REST OF THESE
         System.out.println("3 - Add Goal");
         System.out.println("4 - View Goal Progress");
         System.out.println("5 - Weekly Overview");
@@ -97,6 +96,14 @@ public class NutritionLogApplication {
 
             case 4:
                 viewGoalProgress();
+                break;
+
+            case 5:
+                viewWeekly();
+                break;
+
+            case 6:
+                viewAllTime();
                 break;
 
             case 7:
@@ -127,14 +134,21 @@ public class NutritionLogApplication {
         System.out.println("Enter Date: ");
         scanner.nextLine();
         String date = scanner.nextLine();
-
-        Daily day = new Daily(date);
-        alltime.add(day);
-
-        System.out.println("New Day Successfully Added!");
-
-        displayDayMenu(day);
-
+        
+        boolean duplicate = false; 
+        for (Daily d : alltime.getNutritionLog()) {
+            if (d.getDate().equals(date)) {
+                System.out.println("Duplicate date. Try again.");
+                duplicate = true; 
+                break;
+            }
+        }
+        if (!duplicate) {
+            Daily day = new Daily(date);
+            alltime.add(day);
+            System.out.println("New Day Successfully Added!");
+            displayDayMenu(day);
+        }
     }
 
     // EFFECTS: Displays a day menu with functions specific to days.
@@ -189,6 +203,7 @@ public class NutritionLogApplication {
         System.out.println("Enter calories: ");
         // TODO: ask how to make sure the input is a integer? use requires clause? or
         // exception catching? also for goal setting.
+        //TODO: HOW TO STOP NEGATIVE ENTRIES? SHOULD I STOP?
         int calories = scanner.nextInt();
         System.out.println("Enter carbohydrates (grams): ");
         int carbohydrates = scanner.nextInt();
@@ -219,7 +234,7 @@ public class NutritionLogApplication {
             // TODO: ask why you have to enter date twice after you enter it incorrect
             // once... you cant remove this line otherwise the first time through will
             // prdouce error.
-            scanner.nextLine();
+             scanner.nextLine();
             String input = scanner.nextLine();
 
             goIntoDays(input);
@@ -286,6 +301,8 @@ public class NutritionLogApplication {
 
     // MODIFIES: this
     // EFFECTS: Allows the user to re-enter details for the chosen meal.
+
+
     public void editMenu(Daily day, int index) {
         System.out.println("Enter food item: ");
         // scanner.nextLine();
@@ -575,6 +592,46 @@ public class NutritionLogApplication {
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+    }
+
+    // EFFECTS: prints out a weekly summary of days in tne console
+    private void viewWeekly() {
+        if (alltime.size() == 0) {
+            System.out.println("No days added!");
+            displayMenu();
+        } else {
+            if (alltime.size() <= 7) {
+                for (int i = 0; i < alltime.size(); i++) {
+                    for (int j = 0; j < alltime.get(i).getSize(); j++) {
+                        System.out.println(alltime.get(i).getDate());
+                        System.out.println(alltime.get(i).getMealString(j));
+                    }
+                }
+            } else {
+                for (int i = 0; i < 7; i++) {
+                    for (int j = 0; j < alltime.get(i).getSize(); j++) {
+                        System.out.println(alltime.get(i).getDate());
+                        System.out.println(alltime.get(i).getMealString(j));
+                    }
+                }
+            }
+        }
+    }
+
+    // EFFECTS: displays all days and meals
+    private void viewAllTime() {
+        if (alltime.size() == 0) {
+            System.out.println("No days added!");
+            displayMenu();
+        } else {
+            for (int i = 0; i < alltime.size(); i++) {
+                for (int j = 0; j < alltime.get(i).getSize(); j++) {
+                    System.out.println(alltime.get(i).getDate());
+                    System.out.println(alltime.get(i).getMealString(j));
+                }
+            }
+        }
+
     }
 
     // EFFECTS: prints divider.
