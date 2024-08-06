@@ -1,7 +1,5 @@
 package model;
 
-import org.json.JSONObject;
-import persistence.Writable;
 
 // Represents a single goal. A goal has an objective, a goal number,
 // the current progress towards the goal, and a status of being compelete or not. 
@@ -19,6 +17,14 @@ public class Goal  {
         goalProgress = 0;
         status = false;
 
+    }
+
+    //creates a goal with objective, goal, and goalprogress
+    public Goal(String objective, int goal, int goalprogress) {
+        this.objective = objective;
+        this.goal = goal;
+        this.goalProgress = goalprogress;
+        status = false;
     }
 
     public String getObjective() {

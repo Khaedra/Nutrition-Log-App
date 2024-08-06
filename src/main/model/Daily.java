@@ -3,9 +3,6 @@ package model;
 import java.util.ArrayList;
 import model.Daily;
 
-// import org.json.JSONArray;
-import org.json.JSONObject;
-import persistence.Writable;
 
 //Represents a days worth of meals. Includes a date. 
 public class Daily {

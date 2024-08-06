@@ -153,7 +153,8 @@ public class JsonReader {
     private void addGoal(GoalList gl, JSONObject jsonObject) {
         String objective = jsonObject.getString("objective");
         int goal = jsonObject.getInt("goal");
-        Goal g = new Goal(objective, goal);
+        int goalprogress = jsonObject.getInt("goalProgress");
+        Goal g = new Goal(objective, goal, goalprogress);
         gl.addGoal(g);
     }
 }

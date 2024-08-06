@@ -1,1 +1,33 @@
-{"alltime": []}
+{"alltime": [
+    {
+        "date": "hi",
+        "size": 2,
+        "log": [
+            {
+                "carbohydrates": 4,
+                "fats": 4,
+                "proteins": 4,
+                "name": "cheese amd",
+                "calories": 4
+            },
+            {
+                "carbohydrates": 1,
+                "fats": 1,
+                "proteins": 11,
+                "name": "mac",
+                "calories": 1
+            }
+        ]
+    },
+    {
+        "date": "yup",
+        "size": 1,
+        "log": [{
+            "carbohydrates": 2,
+            "fats": 2,
+            "proteins": 2,
+            "name": "meal2",
+            "calories": 2
+        }]
+    }
+]}

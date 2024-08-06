@@ -1,7 +1,5 @@
 package model;
 
-import org.json.JSONObject;
-import persistence.Writable;
 
 // Represents a single meal eaten. Includes a name, calories, carbohydrates, proteins, and fats.
 

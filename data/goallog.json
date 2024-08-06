@@ -1,1 +1,6 @@
-{"goallist": []}
+{"goallist": [{
+    "goal": 100,
+    "goalProgress": 15,
+    "objective": "Protein Goal",
+    "status": true
+}]}

@@ -234,7 +234,7 @@ public class NutritionLogApplication {
             // TODO: ask why you have to enter date twice after you enter it incorrect
             // once... you cant remove this line otherwise the first time through will
             // prdouce error.
-             scanner.nextLine();
+            scanner.nextLine();
             String input = scanner.nextLine();
 
             goIntoDays(input);
