@@ -17,6 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Code for generating a GUI nutrition log application
 public class VisualApplication {
 
     private static final String JSON_STORE = "./data/goallog.json";
@@ -28,7 +29,8 @@ public class VisualApplication {
     private JsonReader jsonReader;
     private JsonReader jsonReader2;
 
-    // Code for generating a GUI nutrition log application
+    // MODIFIES: this
+    // EFFECTS: Initializes variables, readers and writers, and displays main menu
     public VisualApplication() throws FileNotFoundException {
 
         init();
@@ -40,14 +42,17 @@ public class VisualApplication {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: Initializes variables
     public void init() {
         alltime = new NutritionLog();
         goallist = new GoalList();
     }
 
-    @SuppressWarnings("methodlength")
     // EFFECTS: Displays main menu with buttons
+    // NOTE: doesn't make sense to decompose this method. Too long even using
+    // multiple helper methods. Serves as the main starting point with all options.
+    @SuppressWarnings("methodlength")
     public void displayMenu() {
 
         JFrame frame = initFrame("Nutrition Log Application");
@@ -203,6 +208,7 @@ public class VisualApplication {
 
     }
 
+    // EFFECTS: generic method to initialize a basic frame with a title
     public JFrame initFrame(String title) {
         JFrame frame = new JFrame(title);
         frame.setSize(750, 750);
@@ -212,6 +218,10 @@ public class VisualApplication {
         return frame;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new frame with a prompt to enter the date of a new day
+    // NOTE: Can't shorten this method since it uses the value of the text field to
+    // check conditionals. Must all be in the same method
     @SuppressWarnings("methodlength")
     public void newDay() {
         JFrame newdaymenu = initFrame("Create new day");
@@ -228,13 +238,13 @@ public class VisualApplication {
 
                 if (date.getText().isEmpty()) {
                     newdaymenu.add(invalid);
-                    newdaymenu.revalidate(); // Refresh the frame to show the new label
+                    newdaymenu.revalidate();
                     newdaymenu.repaint();
                 } else {
                     for (Daily d : alltime.getNutritionLog()) {
                         if (d.getDate().equals(date.getText())) {
                             newdaymenu.add(duplicatedate);
-                            newdaymenu.revalidate(); // Refresh the frame to show the new label
+                            newdaymenu.revalidate();
                             newdaymenu.repaint();
                             duplicate = true;
                             break;
@@ -243,10 +253,8 @@ public class VisualApplication {
                     if (!duplicate) {
                         Daily day = new Daily(date.getText());
                         alltime.add(day);
-                        // newdaymenu.add(success);
                         newdaymenu.revalidate();
                         newdaymenu.repaint();
-
                         displayDayMenu(day);
                         newdaymenu.dispose();
                     }
@@ -267,12 +275,17 @@ public class VisualApplication {
 
     }
 
+    // EFFECTS: generic method to create a button with an action listener and effect
+    // when pressed
     private JButton createButton(String text, ActionListener actionListener) {
         JButton button = new JButton(text);
         button.addActionListener(actionListener);
         return button;
     }
 
+    // EFFECTS: Displays the menu that has options to do with each day.
+    // NOTE: Including multiple helper methods won't get this method to under 25
+    // lines.
     @SuppressWarnings("methodlength")
     public void displayDayMenu(Daily day) {
         JFrame displaydaymenu = initFrame(day.getDate());
@@ -336,6 +349,12 @@ public class VisualApplication {
 
     }
 
+    // REQUIRES: calories, carbs, proteins, and fats must be integer values.
+    // MODIFIES: this
+    // EFFECTS: Displays prompts for user to enter specific meal details.
+    // NOTE: Hard to decompose this method since the labels and fields need to be in
+    // a specific order. As well, needs the inputs from the fields to create the
+    // meal
     @SuppressWarnings("methodlength")
     public void addMeal(Daily day) {
         JFrame addMealMenu = initFrame("Add Meal");
@@ -372,7 +391,7 @@ public class VisualApplication {
         addMealMenu.add(proteinField);
         addMealMenu.add(enterfat);
         addMealMenu.add(fatField);
-        addMealMenu.add(addMealButton);
+        addMealMenu.add(addMealButton); 
         addMealMenu.add(back);
         addMealMenu.add(image);
         addMealMenu.add(reference);
@@ -399,6 +418,7 @@ public class VisualApplication {
 
     }
 
+    // EFFECTS: Displays all days currently added as buttons
     public void displayDays() {
 
         JFrame alldays = new JFrame("All Days");
@@ -428,6 +448,10 @@ public class VisualApplication {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays list of current meals as buttons and prompts user to select
+    // which to edit.
+    // NOTE: this method is 26 lines long...
     @SuppressWarnings("methodlength")
     public void editMeals(Daily day) {
         JFrame allmeals = initFrame(day.getDate() + " meals");
@@ -456,6 +480,11 @@ public class VisualApplication {
         }
     }
 
+    // REQUIRES: calories, carbs, proteins, and fats must be integer values.
+    // MODIFIES: this
+    // EFFECTS: prompts user to enter the new details of the meal they are editing.
+    // NOTE: Same problem as other methods that use the value of fields. Hard to
+    // decompose. Order of fields and labels is intertwined
     @SuppressWarnings("methodlength")
     public void editMenu(Daily day, int index) {
         JFrame addMealMenu = initFrame("Edit Meal");
@@ -509,6 +538,9 @@ public class VisualApplication {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: Displays list of meals as buttons and prompts user to select which
+    // to delete
     public void deleteMeals(Daily day) {
         JFrame allmeals = initFrame(day.getDate() + " meals");
 
@@ -527,6 +559,7 @@ public class VisualApplication {
         deleteAction(allmeals, day);
     }
 
+    // EFFECTS: deletes meal user selects
     public void deleteAction(JFrame allmeals, Daily day) {
         JLabel success = new JLabel("Meal Successfully Deleted: ");
         for (int i = 0; i < day.getSize(); i++) {
@@ -549,6 +582,8 @@ public class VisualApplication {
         }
     }
 
+    // EFFECTS: returns the total amount of calories, carbs, proteins, or fat within
+    // a day
     public int calculateTotal(Daily day, String macro) {
         int total = 0;
         for (Meal m : day.getLog()) {
@@ -568,6 +603,8 @@ public class VisualApplication {
         return total;
     }
 
+    // EFFECTS: displays the current daily macros based on meals added to current
+    // day.
     public void viewDailyMacros(Daily day, GoalList goallist) {
 
         JFrame allmeals = initFrame("View Macros");
@@ -591,6 +628,7 @@ public class VisualApplication {
         allmeals.add(back);
     }
 
+    // EFFECTS: Displays actual macro label.
     public void addDailyMacroLabels(JFrame allmeals, Daily day) {
         final int totalCalories = calculateTotal(day, "Calories");
         final int totalCarbs = calculateTotal(day, "Carb");
@@ -604,9 +642,10 @@ public class VisualApplication {
         allmeals.add(carbLabel);
         allmeals.add(proteinLabel);
         allmeals.add(fatLabel);
-
     }
 
+    // MODIFIES: this
+    // EFFECTS: Actually adds the macros to existing goals and progresses value.
     public void addMacrosToGoals(JFrame allmeals, Daily day) {
         final int totalCalories = calculateTotal(day, "Calories");
         final int totalCarbs = calculateTotal(day, "Carb");
@@ -632,6 +671,9 @@ public class VisualApplication {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: Prompts the user to select a type of goal to add.
+    // NOTE: this is literally the shortest I can make this method.
     @SuppressWarnings("methodlength")
     public void goalMenu() {
 
@@ -680,6 +722,8 @@ public class VisualApplication {
 
     }
 
+    // REQUIRES: calField must be an integer.
+    // EFFECTS: prompts the user to enter the values of their calorie goal.
     public void calorieGoal(JFrame addgoal) {
 
         JLabel whatcal = new JLabel("What is your calorie goal?");
@@ -706,6 +750,8 @@ public class VisualApplication {
         });
     }
 
+    // REQUIRES: carbField must be an integer.
+    // EFFECTS: prompts the user to enter the values of their carb goal.
     public void carbGoal(JFrame addgoal) {
         JLabel whatcarb = new JLabel("What is your carb goal (grams?");
         JTextField carbField = new JTextField(10);
@@ -731,6 +777,8 @@ public class VisualApplication {
 
     }
 
+    // REQUIRES: proField must be an integer.
+    // EFFECTS: prompts the user to enter the values of their protein goal.
     public void proGoal(JFrame addgoal) {
         JLabel whatpro = new JLabel("What is your protein goal (grams)?");
         JTextField proField = new JTextField(10);
@@ -756,6 +804,8 @@ public class VisualApplication {
         });
     }
 
+    // REQUIRES: fatField must be an integer.
+    // EFFECTS: prompts the user to enter the values of their fat goal.
     public void fatGoal(JFrame addgoal) {
         JLabel whatfat = new JLabel("What is your fat goal (grams)?");
         JTextField fatField = new JTextField(10);
@@ -780,6 +830,8 @@ public class VisualApplication {
         });
     }
 
+    // EFFECTS: displays main goal menu with options to manage goals.
+    // NOTE: this is the shortest I can make this method
     @SuppressWarnings("methodlength")
     public void viewGoalProgress() {
         JFrame viewgoals = initFrame("View Goals");
@@ -810,6 +862,7 @@ public class VisualApplication {
 
     }
 
+    // EFFECTS: Displays a progress bar of the users goals
     public void displayGoalGraphs(JFrame viewgoals) {
         for (int i = 0; i < goallist.getSize(); i++) {
             JLabel g = new JLabel(goallist.getGoal(i).toString());
@@ -823,16 +876,13 @@ public class VisualApplication {
         }
     }
 
+    // EFFECTS: displays goals as buttons and prompts user to select one to edit.
     public void editmenu() {
         JFrame editgoals = initFrame("Edit Goals");
-
         JLabel select = new JLabel("Select a goal you wish to edit");
-
         editgoals.add(select);
-
         for (int i = 0; i < goallist.getSize(); i++) {
             Goal goal = goallist.getGoal(i);
-
             JButton g = createButton(goallist.getGoal(i).toString(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -842,10 +892,13 @@ public class VisualApplication {
             editgoals.add(g);
             editgoals.revalidate();
             editgoals.repaint();
-
         }
     }
 
+    // REQUIRES: progressField and goalField must be integers.
+    // EFFECTS: displays the fields for editing current goal.
+    // NOTE: Same issue with other methods which use fields. Inconvenient to split
+    // into two methods.
     @SuppressWarnings("methodlength")
     public void editGoalFunction(JFrame editgoals, Goal goal) {
         JLabel newgoal = new JLabel("What is your new goal?");
@@ -883,6 +936,7 @@ public class VisualApplication {
         });
     }
 
+    // EFFECTS: displays goals as buttons and prompts user to delete.
     public void deleteMenu() {
         JFrame deletegoals = initFrame("Delete Goals");
 
@@ -898,6 +952,7 @@ public class VisualApplication {
         deletegoals.add(back);
     }
 
+    // EFFECTS: deletes goal and displays "goal successfully deleted".
     public void deleteGoalFunction(JFrame deletegoals) {
         JLabel success = new JLabel("Goal Successfully Deleted!");
         for (int i = 0; i < goallist.getSize(); i++) {
@@ -921,6 +976,7 @@ public class VisualApplication {
 
     }
 
+    // EFFECTS: Displays the weekly overview of days and meals.
     public void viewWeekly() {
         JFrame weekly = initFrame("View Weekly");
         JButton back = new JButton("Back");
@@ -930,12 +986,11 @@ public class VisualApplication {
                 weekly.dispose();
             }
         });
-
         viewWeeklyFunction(weekly);
-
         weekly.add(back);
     }
 
+    // EFFECTS: decides number of days to display.
     public void viewWeeklyFunction(JFrame weekly) {
         if (alltime.size() <= 7) {
             viewToString(alltime.size(), weekly);
@@ -944,6 +999,7 @@ public class VisualApplication {
         }
     }
 
+    // EFFECTS: Produces label of days and meals.
     public void viewToString(int a, JFrame weekly) {
         for (int i = 0; i < a; i++) {
             JLabel days = new JLabel("Date: " + alltime.get(i).getDate());
@@ -959,6 +1015,7 @@ public class VisualApplication {
         }
     }
 
+    // EFFECTS: displays all days and meals ever added
     public void viewAllTime() {
 
         JFrame weekly = initFrame("View All Time");

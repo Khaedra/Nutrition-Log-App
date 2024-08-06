@@ -20,6 +20,13 @@ This friendly interface will also allow you to log multiple days and view weeks 
 6. As a user, I want to be able to have the option to save the current state of my days and goals.
 7. As a user, I want to be able to load my days and goals from file. 
 
+# Instructions for Grader
 
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by selecting "New Day" and entering a date. This will add a day (X) to a list of days (Y). You can view this by clicking "Back", and then "View Weekly" or "All Time Overview" to see your day added. 
+- In addtion you can click "Select Day", select your day, and then "add a meal". This will add a Meal(X) to a list of Meals (y).
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by adding a meal. Enter a name, calories, carbs, protein, and fat. On this screen, you will also find the visual component; An infographic of what foods contain what macros. After adding a meal, select "back" and then "Edit a meal". Select your meal and now you will be prompted to change its details. Once modified, this you can see that the meal has been edited by clicking "Edit meal" again. This fulfills the second requirement. 
+- You can locate my visual component by selecting "Add a meal" as mentioned earlier. An infographic sourced by Health.mil displays which foods contain a significant amount of carbs, protein, and fat. 
+- You can save the state of my application by selecting "Save log to file". This will automatically write all current data (days, meals, goals) to the file. 
+- You can reload the state of my application by selecting "Load log from file". This will load your last saved state of the application. 
 
  
