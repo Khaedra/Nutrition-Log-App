@@ -25,12 +25,14 @@ public class Daily {
     // MODIFIES: this
     // EFFECTS: adds a meal to the daily meals
     public void addMeal(Meal meal) {
+        EventLog.getInstance().logEvent(new Event("Added meal: " + meal.toString()));
         log.add(meal);
     }
 
     // MODIFIES: this
     // EFFECTS: adds a meal to a specific spot in the day
     public void addMealSpecific(int index, Meal meal) {
+        EventLog.getInstance().logEvent(new Event("Edited Meal: " + meal.toString()));
         log.add(index, meal);
     }
 
@@ -60,6 +62,7 @@ public class Daily {
     // REQUIRES: index is valid
     // EFFECTS: Removes meal at index
     public void remove(int index) {
+        EventLog.getInstance().logEvent(new Event("Removed/Edited Meal"));
         log.remove(index);
     }
 

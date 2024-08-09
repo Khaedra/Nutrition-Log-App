@@ -29,4 +29,64 @@ This friendly interface will also allow you to log multiple days and view weeks 
 - You can save the state of my application by selecting "Save log to file". This will automatically write all current data (days, meals, goals) to the file. 
 - You can reload the state of my application by selecting "Load log from file". This will load your last saved state of the application. 
 
+# Representative Event Log
+Thu Aug 08 19:36:18 PDT 2024
+Added day: july
+
+
+Thu Aug 08 19:36:22 PDT 2024
+Added meal:  Name: mac
+ Calories: 2
+ Carbohydrates: 2g
+ Protein: 2g
+ Fat: 2g
+
+
+Thu Aug 08 19:36:24 PDT 2024
+Removed/Edited Meal
+
+
+Thu Aug 08 19:36:27 PDT 2024
+Edited Meal:  Name: cheese
+ Calories: 4
+ Carbohydrates: 4g
+ Protein: 4g
+ Fat: 4g
+
+
+Thu Aug 08 19:36:31 PDT 2024
+Removed/Edited Meal
+
+
+Thu Aug 08 19:36:39 PDT 2024
+Added meal:  Name: cracker
+ Calories: 2
+ Carbohydrates: 2g
+ Protein: 2g
+ Fat: 2g
+
+
+Thu Aug 08 19:36:45 PDT 2024
+Added goal: Calorie Goal: 0/2
+
+
+Thu Aug 08 19:36:56 PDT 2024
+Edited goal progress: 1
+
+
+Thu Aug 08 19:37:03 PDT 2024
+Added goal: Carb Goal: 0/4
+
+
+Thu Aug 08 19:37:06 PDT 2024
+Removed goal
+
+
+Thu Aug 08 19:37:10 PDT 2024
+Increased goal progress by: 2
+
+# Possible Improvements
+After creating my UML class diagram and coding my GUI, a big component that could be improved is the Goal class. When adding a goal, the user is given the option to add 4 different types of goals which I all created under the same umbrella. In hindsight, I should've made an abstract class Goal and 4 subclasses matching the specific types of goals. That way, a lot of repeat code could have been removed and also made the implementation of the GUI shorter and easier to read. 
+
+As well, I definitely could have split up my visual application class into multiple classes that all handle a specific part of the application. As it is right now, it handles every function the application can do, but it might make sense to have classes handle different functions of each button. For example, the select day button offers many more functions once clicked and would make sense if it was seperate from the main menu. 
  

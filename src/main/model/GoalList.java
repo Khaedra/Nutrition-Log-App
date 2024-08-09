@@ -18,12 +18,14 @@ public class GoalList implements Writable {
     // MODIFIES: this
     // EFFECTS: Adds a goal to the end of the list
     public void addGoal(Goal goal) {
+        EventLog.getInstance().logEvent(new Event("Added goal: " + goal));
         goallist.add(goal);
     }
 
     // MODIFIES: this
     // EFFECTS: Removes a goal from the specified index
     public void removeGoal(int index) {
+        EventLog.getInstance().logEvent(new Event("Removed goal"));
         goallist.remove(index);
     }
 

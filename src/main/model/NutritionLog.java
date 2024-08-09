@@ -17,6 +17,7 @@ public class NutritionLog implements Writable {
     // MODIFIES: this
     // EFFECTS: Adds a day to the end of the list of days
     public void add(Daily day) {
+        EventLog.getInstance().logEvent(new Event("Added day: " + day.getDate()));
         alltime.add(day);
     }
 

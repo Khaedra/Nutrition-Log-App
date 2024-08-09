@@ -45,10 +45,12 @@ public class Goal  {
 
     public int getGoalProgress() {
         return goalProgress;
+
     }
 
     public void setGoalProgress(int goalProgress) {
         this.goalProgress = goalProgress;
+        EventLog.getInstance().logEvent(new Event("Edited goal progress: " + goalProgress));
     }
 
     public boolean isStatus() {
@@ -64,6 +66,7 @@ public class Goal  {
     // EFFECTS: increases goal progress by amount.
     public void increaseGoalProgress(int amount) {
         goalProgress += amount;
+        EventLog.getInstance().logEvent(new Event("Increased goal progress by: " + amount));
     }
 
     // EFFECTS: returns true if goal is reached

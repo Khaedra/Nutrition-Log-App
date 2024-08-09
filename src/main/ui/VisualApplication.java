@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.swing.*;
 
 import model.Daily;
+import model.EventLog;
 import model.Goal;
 import model.GoalList;
 import model.Meal;
@@ -202,6 +203,7 @@ public class VisualApplication {
         quit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                printLog(EventLog.getInstance());
                 System.exit(0);
             }
         });
@@ -391,7 +393,7 @@ public class VisualApplication {
         addMealMenu.add(proteinField);
         addMealMenu.add(enterfat);
         addMealMenu.add(fatField);
-        addMealMenu.add(addMealButton); 
+        addMealMenu.add(addMealButton);
         addMealMenu.add(back);
         addMealMenu.add(image);
         addMealMenu.add(reference);
@@ -1045,4 +1047,10 @@ public class VisualApplication {
 
     }
 
+    public void printLog(EventLog el) {
+        for (model.Event e : el) {
+            System.out.println(e.toString() + "\n\n");
+        }
+
+    }
 }
